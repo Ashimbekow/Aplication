@@ -1,0 +1,87 @@
+<div class="background text-white" *ngIf="bookItem">
+  <div class="container py-3">
+    <div class="detail-image-container">
+      <app-book-cover
+        [imageLinks]="bookItem.volumeInfo.imageLinks"
+      ></app-book-cover>
+    </div>
+
+    <div class="my-2">
+      <h3>{{ bookItem.volumeInfo.title }}</h3>
+    </div>
+    <div
+      class="mb-2 d-flex align-items-center"
+      *ngIf="bookItem.volumeInfo.averageRating"
+    >
+      <img
+        src="../../../../../assets/star.svg"
+        alt="No image..."
+        class="star-image"
+      />
+      <span class="fw-bold ms-1">
+        {{ bookItem.volumeInfo.averageRating }}
+      </span>
+    </div>
+    <hr />
+
+    <div class="mb-2">
+      <app-book-list-items [items]="bookItem.volumeInfo.authors">
+        Автор:
+      </app-book-list-items>
+    </div>
+
+    <div class="mb-2">
+      <app-book-list-items [items]="bookItem.volumeInfo.categories">
+        Категории:
+      </app-book-list-items>
+    </div>
+
+    <div class="mb-2">
+      Язык:
+      <span class="text-gray ms-1">{{ bookItem.volumeInfo.language }}</span>
+    </div>
+
+    <div class="mb-2">
+      Публикация:
+      <span class="text-gray ms-1">{{ bookItem.volumeInfo.publisher }}</span>
+    </div>
+
+    <div class="mb-2">
+      дата:
+      <span class="text-gray ms-1">{{
+        bookItem.volumeInfo.publishedDate
+      }}</span>
+    </div>
+
+    <div class="mb-2">
+      Количество страниц:
+      <span class="text-gray ms-1">{{ bookItem.volumeInfo.pageCount }}</span>
+    </div>
+
+    <div class="mb-2" *ngIf="bookPrice">
+      Цена:
+      <span class="text-gray ms-1">{{ bookPrice }}</span>
+    </div>
+
+    <div class="mt-3">
+      <button
+        *ngIf="bookItem.volumeInfo.infoLink"
+        (click)="onExternalLinkOpen(bookItem.volumeInfo.infoLink)"
+        class="btn btn-sm btn-secondary px-4 py-2 mb-2 me-0 me-2"
+      >
+      Получить данные
+      </button>
+      <button
+        class="btn btn-sm btn-primary px-4 py-2 mb-2"
+        *ngIf="
+          bookItem.saleInfo.saleability === SALE_IDENTIFIER &&
+          bookItem.saleInfo.buyLink
+        "
+        (click)="onExternalLinkOpen(bookItem.saleInfo.buyLink)"
+      >
+
+      Заказ
+      </button>
+    </div>
+  </div>
+</div>

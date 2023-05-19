@@ -1,0 +1,78 @@
+<div class="background mb-4">
+  <div class="container py-3">
+    <form [formGroup]="formGroup" class="text-white">
+      <div class="mb-2">
+        <label class="me-1">Поиск<span class="danger">*</span></label>
+        <input
+          formControlName="searchTerm"
+          type="text"
+          [ngClass]="{
+            'is-invalid':
+              formGroup.controls.searchTerm.invalid &&
+              (formGroup.controls.searchTerm.dirty ||
+                formGroup.controls.searchTerm.touched)
+          }"
+          class="form-control form-control-sm"
+          placeholder="Search for books by name / author / keyword..."
+        />
+        <div
+          class="danger"
+          *ngIf="
+            formGroup.controls.searchTerm.invalid &&
+            (formGroup.controls.searchTerm.dirty ||
+              formGroup.controls.searchTerm.touched)
+          "
+        >
+        Пожалуйста, заполните это поле
+        </div>
+      </div>
+      <div class="mb-2">
+        <label>Категория</label>
+        <select class="form-control form-control-sm" formControlName="category">
+          <option
+            *ngFor="let category of SEARCH_CATEGORIES"
+            [ngValue]="category"
+          >
+            {{ category }}
+          </option>
+        </select>
+      </div>
+      <div class="mb-3 d-flex flex-column">
+        <label>Сартировать по</label>
+        <div>
+          <input
+            class="form-check-input me-2"
+            type="radio"
+            formControlName="orderBy"
+            value="relevance"
+            name="orderBy"
+          />
+          <label class="form-check-label">
+            Актуальные </label>
+        </div>
+
+        <div>
+          <input
+            class="form-check-input me-2"
+            type="radio"
+            formControlName="orderBy"
+            value="newest"
+            name="orderBy"
+          />
+          <label class="form-check-label"> Новейшие </label>
+        </div>
+      </div>
+
+      <button
+        class="btn btn-sm btn-light px-4 py-2 me-2 mb-sm-0 mb-2"
+        (click)="formGroup.reset()"
+      >
+
+        Перезагрузить
+      </button>
+      <button class="btn btn-sm btn-primary px-4 py-2" (click)="searchBooks()">
+        Найти книгу
+      </button>
+    </form>
+  </div>
+</div>
